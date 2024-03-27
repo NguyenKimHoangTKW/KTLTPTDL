@@ -13,6 +13,6 @@ for parent in parents:
     data.append([name, price])
     print(formatted_text)
 
-df = pd.DataFrame(data, columns=["Name", "Price"])
+#df = pd.DataFrame(data, columns=["Name", "Price"])
 
-df.to_excel("Shop.xlsx",index=False)
+#df.to_excel("Shop.xlsx",index=False)

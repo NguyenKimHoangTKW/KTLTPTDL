@@ -24,7 +24,7 @@ def fetch_scores(student_code):
         return None
 
 start_code = 1000001
-end_code = 1000101
+end_code = 1000010
 
 all_scores = []
 
