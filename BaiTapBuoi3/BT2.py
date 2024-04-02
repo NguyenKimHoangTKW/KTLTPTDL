@@ -1,7 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
-
+import mysql.connector
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="",
+    database="dbbooktoscrape"
+)
+cursor = db.cursor()
 with open('booktoscrape.csv', mode='w', newline='', encoding='utf-8') as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(["ID",'Book', 'Price'])
@@ -20,3 +27,7 @@ with open('booktoscrape.csv', mode='w', newline='', encoding='utf-8') as csv_fil
                 format_price = price.replace("£", "$")
                 print([number,book, format_price])
                 writer.writerow([number,book, format_price])
+                cursor.execute("INSERT INTO book (id,title, price) VALUES (%s ,%s, %s)", (number,book, format_price))
+                db.commit()
+cursor.close()
+db.close()

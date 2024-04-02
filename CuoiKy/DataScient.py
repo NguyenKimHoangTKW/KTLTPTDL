@@ -39,7 +39,5 @@ with ThreadPoolExecutor(max_workers=10) as executor:
                 print(scores)
         except Exception as e:
             print(f"Yêu cầu cho mã học sinh {student_code} thất bại: {e}")
-
-#df = pd.DataFrame(all_scores)
-
-#df.to_excel("diem_thi.xlsx", index=False)
+df = pd.DataFrame(all_scores)
+df.to_excel("diem_thi.xlsx", index=False)
