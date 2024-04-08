@@ -1,0 +1,195 @@
+{% extends 'layout/base.html' %} {% block title %}
+<title>Kết quả tìm kiếm - Điểm thi THPT Quốc Gia 2023</title>
+{% endblock %} {% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+    }
+    
+    .container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        padding: 20px;
+    }
+    
+    h2 {
+        color: #2a93e9;
+        font-weight: bold;
+        text-align: center;
+    }
+    
+    .list-group-item {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 20px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .list-group-item .info-left {
+        width: 50%;
+    }
+    
+    .list-group-item .info-right {
+        width: 50%;
+        text-align: right;
+    }
+    
+    .list-group-item h4 {
+        margin: 0 0 10px;
+    }
+    
+    .list-group-item a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .list-group-item p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #555;
+    }
+    
+    .btn-search {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #3790e4;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    
+    .btn-search:hover {
+        background-color: #3a9cf7;
+        text-decoration: none;
+        color: white;
+    }
+    
+    .score-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    .score-table td,
+    .score-table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    
+    .score-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    
+    .score-table tr:hover {
+        background-color: #ddd;
+    }
+    
+    .score-table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2>Dữ liệu điểm thi</h2>
+    <h2>Tốt nghiệp THPT 2023</h2>
+    <div class="container mt-4">
+        <form method="GET" action="{{ url_for('search') }}" class="d-flex flex-column align-items-center">
+            <div class="form-group mb-2">
+                <input type="text" class="form-control" name="keyword" value="{{ keyword }}" style="width: 500px; border-radius: 10px 10px 10px 10px;" required>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Tìm kiếm</button>
+        </form>
+    </div>
+    <hr> {% if search_results %}
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="list-group">
+                {% for result in search_results %} {% if result.toan is not none or result.nguvan is not none or result.ngoaingu is not none or result.vatly is not none or result.hoahoc is not none or result.sinhhoc is not none or result.lichsu is not none or result.dialy
+                is not none or result.gdcd is not none %}
+                <li class="list-group-item">
+                    <div class="info-left">
+                        <h3 style="color: #2a93e9;">Số báo danh : <b>{{ keyword }}</b></h3>
+                        <h3>Cụm thi : {{ result.macumthi }} - {{ result.TenCumThi }}</h3>
+                    </div>
+                    <div class="info-right" style="text-align: center;">
+                        <table class="score-table">
+                            <tbody>
+                                {% if result.toan is not none %}
+                                <tr>
+                                    <td>Toán</td>
+                                    <td>{{ result.toan }}</td>
+                                </tr>
+                                {% endif %} {% if result.nguvan is not none %}
+                                <tr>
+                                    <td>Ngữ văn</td>
+                                    <td>{{ result.nguvan }}</td>
+                                </tr>
+                                {% endif %} {% if result.ngoaingu is not none %}
+                                <tr>
+                                    <td>Ngoại ngữ</td>
+                                    <td>{{ result.ngoaingu }}</td>
+                                </tr>
+                                {% endif %} {% if result.vatly is not none %}
+                                <tr>
+                                    <td>Vật lý</td>
+                                    <td>{{ result.vatly }}</td>
+                                </tr>
+                                {% endif %} {% if result.hoahoc is not none %}
+                                <tr>
+                                    <td>Hóa học</td>
+                                    <td>{{ result.hoahoc }}</td>
+                                </tr>
+                                {% endif %} {% if result.sinhhoc is not none %}
+                                <tr>
+                                    <td>Sinh học</td>
+                                    <td>{{ result.sinhhoc }}</td>
+                                </tr>
+                                {% endif %} {% if result.lichsu is not none %}
+                                <tr>
+                                    <td>Lịch sử</td>
+                                    <td>{{ result.lichsu }}</td>
+                                </tr>
+                                {% endif %} {% if result.dialy is not none %}
+                                <tr>
+                                    <td>Địa lý</td>
+                                    <td>{{ result.dialy }}</td>
+                                </tr>
+                                {% endif %} {% if result.gdcd is not none %}
+                                <tr>
+                                    <td>GDCD</td>
+                                    <td>{{ result.gdcd }}</td>
+                                </tr>
+                                {% endif %}
+                                <tr style="font-weight: bold;">
+                                    <td>Điểm trung bình</td>
+                                    <td>{{ result.diemtb }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </li>
+                {% endif %} {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <p>Không tìm thấy kết quả phù hợp.</p>
+    {% endif %}
+</div>
+
+{% endblock %} {% block footer %}{% include 'layout/footer.html '%}{% endblock %}

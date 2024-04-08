@@ -1,0 +1,44 @@
+{% extends 'layout/base.html' %} {% block title %}
+<title>Trang chủ - Tra cứu điểm thi THPT Quốc Gia 2023 </title>
+{% endblock %} {% block content %}
+<div class="hero-wrap" style="background-image: url('../static/images/TDM1.jpg'); background-attachment:fixed;">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-8 ftco-animate text-center">
+                <h1 class="mb-4">KỸ THUẬT LẬP TRÌNH TRONG PHÂN TÍCH DỮ LIỆU</h1>
+                <p><a href="{{ url_for('View_Data')}}" class="btn btn-primary px-4 py-3">Xem Data</a> <a href="{{ url_for('View_Search_Data')}}" class="btn btn-secondary px-4 py-3">Tìm kiếm</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-search-course">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="courseSearch-wrap d-md-flex flex-column-reverse">
+
+                    <div class="full-wrap ftco-animate">
+                        <div class="one-half">
+                            <div class="featured-blog d-md-flex">
+                                <div class="image d-flex order-last">
+                                    <a href="#" class="img" style="background: url(../static/images/TDM11.jpg);"></a>
+                                </div>
+                                <div class="text order-first">
+                                    <h3>Thông tin GVHD và Thành viên nhóm 6</h3>
+                                    <p>GVHD : Nguyễn Thế Bảo</p>
+                                    <p>SVTH : Nguyễn Kim Hoàng </p>
+                                    <p>MSSV : 2124802010093</p>
+                                    <p>SVTH : Trần Xuân Hiếu</p>
+                                    <p>MSSV : 2124802010093</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

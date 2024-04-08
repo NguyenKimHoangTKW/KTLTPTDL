@@ -8,16 +8,17 @@ import mysql.connector
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="",
+    password="hoang",
     database="dbthptqg2023"
 )
 cursor = db.cursor()
-start = 14001548
-end = 14001648
+start = 2040868
+end = 2040870
 added_cumthi = set()
 df = pd.DataFrame(columns=['SBD', 'Mã cụm thi', 'Tên cụm thi', 'Toán', 'Ngữ văn', 'Ngoại ngữ', 'Vật lý', 'Hóa học', 'Sinh học', 'Lịch sử', 'Địa lý', 'Giáo dục công dân', 'TBM', 'Url trang web'])
 
 async def fetch_data(session, sobaodanh):
+    sobaodanh = str(sobaodanh).zfill(8)
     url = f"https://diemthi.vnexpress.net/index/detail/sbd/{sobaodanh}/year/2023"
     async with session.get(url) as response:
         html = await response.text()

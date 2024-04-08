@@ -1,0 +1,71 @@
+{% extends 'layout/base.html' %}{% block title %}
+<title>Tìm kiếm - Điểm thi THPT Quốc Gia 2023</title>
+{% endblock %} {% block header %} {% include 'layout/navtitle.html '%}{% endblock %} {% block content %}
+<section class="ftco-section" style="padding-top: 12px;">
+    <div class="container">
+        <h2 style="text-align: center;">CRAWL DATA | Thông tin thí sinh dự thi 2023</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover e-commerce-table">
+                        <thead>
+                            <tr>
+                                <th>Số báo danh</th>
+                                <th>Cụm thi</th>
+                                <th>Toán</th>
+                                <th>Ngữ văn</th>
+                                <th>Ngoại ngữ</th>
+                                <th>Vật lý</th>
+                                <th>Hóa học</th>
+                                <th>Sinh học</th>
+                                <th>Lịch sử</th>
+                                <th>Địa lý</th>
+                                <th>GDCD</th>
+                                <th>Điểm TB môn</th>
+                                <th>URL Website</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in Thongtinthisinh %}
+                            <tr>
+                                <td># {{ i.sbd }}</td>
+                                <td>{{ i.macumthi }} - {{ i.TenCumThi }}</td>
+                                <td>{{ i.toan }}</td>
+                                <td>{{ i.nguvan }}</td>
+                                <td>{{ i.ngoaingu }}</td>
+                                <td>{{ i.vatly }}</td>
+                                <td>{{ i.hoahoc }}</td>
+                                <td>{{ i.sinhhoc }}</td>
+                                <td>{{ i.lichsu }}</td>
+                                <td>{{ i.dialy }}</td>
+                                <td>{{ i.gdcd }}</td>
+                                <td>{{ i.diemtb }}</td>
+                                <td><a href="{{ i.urlweb }}">{{ i.urlweb }}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col text-center">
+            <div class="block-27">
+                <ul>
+                    {% set start_page = 1 %} {% if page > 5 %} {% set start_page = page - 4 %} {% if pages > 5 %}
+                    <li><a href="{{ url_for('View_Data', page=start_page-1) }}">&lt;</a></li>
+                    {% endif %} {% endif %} {% set end_page = start_page + 5 if pages >= start_page + 5 else pages %} {% for idx in range(start_page, end_page + 1) %}
+                    <li class="page-item {% if idx == page %}active{% endif %}"><a href="{{ url_for('View_Data', page=idx) }}">{{ idx }}</a></li>
+                    {% endfor %} {% if pages > 5 and start_page + 4
+                    < pages %} <li><a href="{{ url_for('View_Data', page=start_page+5) }}">&gt;</a></li>
+                        {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+{% endblock %} {% block footer %}{% include 'layout/footer.html '%}{% endblock %}

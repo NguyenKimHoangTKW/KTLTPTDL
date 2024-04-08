@@ -1,8 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import mysql.connector
+
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="hoang",
+    database="dbwebfilm"
+)
+cursor = db.cursor()
 data = []
-for page in range(1, 5):
+for page in range(1,2+1):
     url = f"https://phimmoichillp.net/list/phim-le/page-{page}/"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -33,9 +42,13 @@ for page in range(1, 5):
             if label.get_text() == "Diễn viên: ":
                 formatdienvien = row.find_all('a')
                 dienvien = ', '.join(tag.get_text() for tag in formatdienvien)
-        
+
+        cursor.execute("INSERT INTO dbldata (tenphim, namphathanh, trangthaiphim, thoiluongphim, dienvien, linkwebfilm, imagefilm) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name_film, nam, title_film, thoiluong, dienvien, link_film, image_film))                 
         print([name_film, nam, theloai, title_film, thoiluong, dienvien, link_film, image_film])
-        data.append([name_film, nam, theloai, title_film, thoiluong, dienvien, link_film, image_film])
-df = pd.DataFrame(data, columns=['Name', 'Year', 'Genre', 'Title', 'Duration', 'Actors', 'Link', 'Image'])
-df.to_csv('movies_data.csv', index=False, encoding='utf-8-sig')
+        #data.append([name_film, nam, theloai, title_film, thoiluong, dienvien, link_film, image_film])
+db.commit()
+cursor.close()
+db.close()
+# df = pd.DataFrame(data, columns=['Name', 'Year', 'Genre', 'Title', 'Duration', 'Actors', 'Link', 'Image'])
+# df.to_csv('movies_data.csv', index=False, encoding='utf-8-sig')
 
