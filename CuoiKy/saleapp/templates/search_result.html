@@ -124,6 +124,14 @@
                     <div class="info-left">
                         <h3 style="color: #2a93e9;">Số báo danh : <b>{{ keyword }}</b></h3>
                         <h3>Cụm thi : {{ result.macumthi }} - {{ result.TenCumThi }}</h3>
+                        <hr> {% set mon_hoc_count = 0 %} {% if result.sinhhoc is not none %} {% set mon_hoc_count = mon_hoc_count + 1 %} {% endif %} {% if result.vatly is not none %} {% set mon_hoc_count = mon_hoc_count + 1 %} {% endif %} {% if result.hoahoc
+                        is not none %} {% set mon_hoc_count = mon_hoc_count + 1 %} {% endif %} {% if result.lichsu is not none %} {% set mon_hoc_count = mon_hoc_count + 1 %} {% endif %} {% if result.dialy is not none %} {% set mon_hoc_count = mon_hoc_count
+                        + 1 %} {% endif %} {% if result.gdcd is not none %} {% set mon_hoc_count = mon_hoc_count + 1 %} {% endif %} {% if mon_hoc_count > 0 %} {% set diem_tb_thi_to_hop = ((result.sinhhoc or 0) + (result.vatly or 0) + (result.hoahoc or
+                        0) + (result.lichsu or 0) + (result.dialy or 0) + (result.gdcd or 0)) / mon_hoc_count %} {% set tong_diem = (result.toan or 0) + (result.nguvan or 0) + (result.ngoaingu or 0) + diem_tb_thi_to_hop %}
+
+                        <h5>Tổng điểm 3 môn chính + trung bình môn tổ hợp : <b style="color: red;">{{ '%.2f'|format(tong_diem) }}</b></h5>
+
+                        {% else %} {% set diem_tb_thi_to_hop = None %} {% endif %}
                     </div>
                     <div class="info-right" style="text-align: center;">
                         <table class="score-table">
@@ -178,6 +186,8 @@
                                     <td>Điểm trung bình</td>
                                     <td>{{ result.diemtb }}</td>
                                 </tr>
+
+
                             </tbody>
                         </table>
                     </div>
