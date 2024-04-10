@@ -9,13 +9,60 @@ db = mysql.connector.connect(
     host="localhost",
     user="root",
     password="hoang",
-    database="dbthptqg2023"
 )
 cursor = db.cursor()
+def create_or_connect_database():
+    try:
+        cursor.execute("USE dbthptqg2023")
+    except mysql.connector.Error as err:
+        if err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
+            cursor.execute("CREATE DATABASE dbthptqg2023")
+            db.commit()
+            print("Database đã được tạo thành công")
+            cursor.execute("USE dbthptqg2023")
+        else:
+            print(err.msg)
+            exit(1)
+
+create_or_connect_database()
+def create_table():
+    try:
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS `cumthi` (
+                `Macumthi`varchar(20) NOT NULL,
+                `tencumthi` varchar(200) DEFAULT NULL,
+                PRIMARY KEY (`Macumthi`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+        """)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS `dblthongtinthisinh` (
+                `sbd` varchar(20) NOT NULL,
+                `macumthi` varchar(20) DEFAULT NULL,
+                `toan` float DEFAULT NULL,
+                `nguvan` float DEFAULT NULL,
+                `ngoaingu` float DEFAULT NULL,
+                `vatly` float DEFAULT NULL,
+                `hoahoc` float DEFAULT NULL,
+                `sinhhoc` float DEFAULT NULL,
+                `lichsu` float DEFAULT NULL,
+                `dialy` float DEFAULT NULL,
+                `gdcd` float DEFAULT NULL,
+                `diemtb` float DEFAULT NULL,
+                `urlweb` varchar(2000) DEFAULT NULL,
+                PRIMARY KEY (`sbd`),
+                KEY `fk_macumthi_idx` (`macumthi`),
+                CONSTRAINT `fk_macumthi` FOREIGN KEY (`macumthi`) REFERENCES `cumthi` (`Macumthi`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+        """)
+        db.commit()
+    except mysql.connector.Error as err:
+        print(err.msg)
+
+create_table()
+
 start = 2040868
 end = 2040870
 added_cumthi = set()
-df = pd.DataFrame(columns=['SBD', 'Mã cụm thi', 'Tên cụm thi', 'Toán', 'Ngữ văn', 'Ngoại ngữ', 'Vật lý', 'Hóa học', 'Sinh học', 'Lịch sử', 'Địa lý', 'Giáo dục công dân', 'TBM', 'Url trang web'])
 
 async def fetch_data(session, sobaodanh):
     sobaodanh = str(sobaodanh).zfill(8)
@@ -55,8 +102,7 @@ async def fetch_data(session, sobaodanh):
                     DiemTB = None
                 data.append(DiemTB)
                 data.append(url)
-                print(data)
-                df.loc[len(df)] = data               
+                print(data)           
                 if score_cumthi not in added_cumthi:
                     cursor.execute("INSERT INTO cumthi (Macumthi, tencumthi) VALUES (%s, %s) ON DUPLICATE KEY UPDATE tencumthi = VALUES(tencumthi)", (score_cumthi, cumthi_name))
                     added_cumthi.add(score_cumthi)
@@ -79,9 +125,9 @@ async def main():
     async with aiohttp.ClientSession() as session:
         tasks = [fetch_data(session, sobaodanh) for sobaodanh in range(start, end + 1)]
         await asyncio.gather(*tasks)
+
+
 asyncio.run(main())
 db.commit()
 cursor.close()
 db.close()
-df.sort_values(by='SBD', inplace=True)
-df.to_excel("THPTQG2023.xlsx", index=False)

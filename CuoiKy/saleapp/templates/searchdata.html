@@ -1,11 +1,21 @@
 {% extends 'layout/base.html' %}{% block title %}
 <title>Tìm kiếm - Điểm thi THPT Quốc Gia 2023</title>
-{% endblock %} {% block header %} {% include 'layout/navtitle.html '%}{% endblock %} {% block content %}
+{% endblock %} {% block header %} {% include 'layout/header.html '%}{% endblock %} {% block content %}
 <section class="ftco-section" style="padding-top: 12px;">
     <div class="container">
-        <h2 style="text-align: center;">CRAWL DATA | Thông tin thí sinh dự thi 2023</h2>
+        <h2 style="text-align: center;">Tìm kiếm | Thông tin thí sinh dự thi 2023</h2>
+        <div class="container mt-4">
+            <form method="GET" action="{{ url_for('search') }}" class="d-flex flex-column align-items-center">
+                <div class="form-group mb-2">
+                    <input type="text" class="form-control" name="keyword" placeholder="Nhập số báo danh cần tìm kiếm" style="width: 500px; border-radius: 10px 10px 10px 10px;" required>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Tìm kiếm</button>
+            </form>
+        </div>
+        <hr>
         <div class="card">
             <div class="card-body">
+
                 <div class="table-responsive">
                     <table class="table table-hover e-commerce-table">
                         <thead>
@@ -21,26 +31,24 @@
                                 <th>Lịch sử</th>
                                 <th>Địa lý</th>
                                 <th>GDCD</th>
-                                <th>Điểm TB môn</th>
-                                <th>URL Website</th>
+                                <th>Điểm TB</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for i in Thongtinthisinh %}
                             <tr>
-                                <td># {{ i.sbd }}</td>
+                                <td><b>{{ i.sbd }}</b></td>
                                 <td>{{ i.macumthi }} - {{ i.TenCumThi }}</td>
-                                <td>{{ i.toan }}</td>
-                                <td>{{ i.nguvan }}</td>
-                                <td>{{ i.ngoaingu }}</td>
-                                <td>{{ i.vatly }}</td>
-                                <td>{{ i.hoahoc }}</td>
-                                <td>{{ i.sinhhoc }}</td>
-                                <td>{{ i.lichsu }}</td>
-                                <td>{{ i.dialy }}</td>
-                                <td>{{ i.gdcd }}</td>
-                                <td>{{ i.diemtb }}</td>
-                                <td><a href="{{ i.urlweb }}">{{ i.urlweb }}</a></td>
+                                <td>{% if i.toan %}{{ i.toan }}{% endif %}</td>
+                                <td>{% if i.nguvan %}{{ i.nguvan }}{% endif %}</td>
+                                <td>{% if i.ngoaingu %}{{ i.ngoaingu }}{% endif %}</td>
+                                <td>{% if i.vatly %}{{ i.vatly }}{% endif %}</td>
+                                <td>{% if i.hoahoc %}{{ i.hoahoc }}{% endif %}</td>
+                                <td>{% if i.sinhhoc %}{{ i.sinhhoc }}{% endif %}</td>
+                                <td>{% if i.lichsu %}{{ i.lichsu }}{% endif %}</td>
+                                <td>{% if i.dialy %}{{ i.dialy }}{% endif %}</td>
+                                <td>{% if i.gdcd %}{{ i.gdcd }}{% endif %}</td>
+                                <td><b>{% if i.diemtb %}{{ i.diemtb }}{% endif %}</b></td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -54,11 +62,11 @@
             <div class="block-27">
                 <ul>
                     {% set start_page = 1 %} {% if page > 5 %} {% set start_page = page - 4 %} {% if pages > 5 %}
-                    <li><a href="{{ url_for('View_Data', page=start_page-1) }}">&lt;</a></li>
+                    <li><a href="{{ url_for('View_Search_Data', page=start_page-1) }}">&lt;</a></li>
                     {% endif %} {% endif %} {% set end_page = start_page + 5 if pages >= start_page + 5 else pages %} {% for idx in range(start_page, end_page + 1) %}
-                    <li class="page-item {% if idx == page %}active{% endif %}"><a href="{{ url_for('View_Data', page=idx) }}">{{ idx }}</a></li>
+                    <li class="page-item {% if idx == page %}active{% endif %}"><a href="{{ url_for('View_Search_Data', page=idx) }}">{{ idx }}</a></li>
                     {% endfor %} {% if pages > 5 and start_page + 4
-                    < pages %} <li><a href="{{ url_for('View_Data', page=start_page+5) }}">&gt;</a></li>
+                    < pages %} <li><a href="{{ url_for('View_Search_Data', page=start_page+5) }}">&gt;</a></li>
                         {% endif %}
                 </ul>
             </div>

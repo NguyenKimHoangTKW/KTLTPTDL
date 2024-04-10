@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 class Cumthi(db.Model):
     __tablename__ = 'cumthi' 
 
-    macumthi = db.Column(db.Integer, primary_key=True)
+    macumthi = db.Column(db.String(20), primary_key=True)
     tencumthi = db.Column(db.String(200), nullable=False)
 
     def __repr__(self):
@@ -15,7 +15,7 @@ class Thongtinthisinh(db.Model):
     __tablename__ = 'dblthongtinthisinh' 
 
     sbd = db.Column(db.String(20), primary_key=True)
-    macumthi = db.Column(db.Integer, db.ForeignKey('cumthi.macumthi'))
+    macumthi = db.Column(db.String(20), db.ForeignKey('cumthi.macumthi'))
     toan = db.Column(db.Float)
     nguvan = db.Column(db.Float)
     ngoaingu = db.Column(db.Float)
