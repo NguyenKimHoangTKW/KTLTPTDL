@@ -45,10 +45,6 @@ for page in range(1,2+1):
 
         cursor.execute("INSERT INTO dbldata (tenphim, namphathanh, trangthaiphim, thoiluongphim, dienvien, linkwebfilm, imagefilm) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name_film, nam, title_film, thoiluong, dienvien, link_film, image_film))                 
         print([name_film, nam, theloai, title_film, thoiluong, dienvien, link_film, image_film])
-        #data.append([name_film, nam, theloai, title_film, thoiluong, dienvien, link_film, image_film])
 db.commit()
 cursor.close()
 db.close()
-# df = pd.DataFrame(data, columns=['Name', 'Year', 'Genre', 'Title', 'Duration', 'Actors', 'Link', 'Image'])
-# df.to_csv('movies_data.csv', index=False, encoding='utf-8-sig')
-

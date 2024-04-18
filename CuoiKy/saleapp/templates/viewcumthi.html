@@ -3,7 +3,15 @@
 {% endblock %} {% block header %} {% include 'layout/navtitle.html '%}{% endblock %} {% block content %}
 <section class="ftco-section" style="padding-top: 12px;">
     <div class="container">
-        <h2 style="text-align: center;">CRAWL DATA | Thông tin thí sinh dự thi 2023</h2>
+        <h2 style="text-align: center; font-weight: bolder;">CRAWL DATA | CỤM THI 2023</h2>
+        <div class="col-md-3 offset-md-9 d-flex justify-content-center counter-wrap ftco-animate" style="text-align: center;">
+            <div class="block-18 text-center">
+                <div class="text">
+                    <strong class="number">{{ total_datacumthi_count }}</strong>
+                    <span>DATA Cụm thi</span>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">

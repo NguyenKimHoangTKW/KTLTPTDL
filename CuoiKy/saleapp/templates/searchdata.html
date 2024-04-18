@@ -3,11 +3,11 @@
 {% endblock %} {% block header %} {% include 'layout/header.html '%}{% endblock %} {% block content %}
 <section class="ftco-section" style="padding-top: 12px;">
     <div class="container">
-        <h2 style="text-align: center;">Tìm kiếm | Thông tin thí sinh dự thi 2023</h2>
+        <h2 style="text-align: center;font-weight: bold;">Tìm kiếm | Thông tin thí sinh dự thi 2023</h2>
         <div class="container mt-4">
             <form method="GET" action="{{ url_for('search') }}" class="d-flex flex-column align-items-center">
                 <div class="form-group mb-2">
-                    <input type="text" class="form-control" name="keyword" placeholder="Nhập số báo danh cần tìm kiếm" style="width: 500px; border-radius: 10px 10px 10px 10px;" required>
+                    <input type="text" class="form-control" name="keyword" placeholder="Nhập số báo danh cần tìm kiếm..." style="width: 500px; border-radius: 10px 10px 10px 10px;" required>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Tìm kiếm</button>
             </form>

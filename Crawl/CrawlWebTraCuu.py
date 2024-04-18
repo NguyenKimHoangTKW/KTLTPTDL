@@ -8,7 +8,7 @@ import mysql.connector
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="",
+    password="hoang",
 )
 cursor = db.cursor()
 def create_or_connect_database():
@@ -60,8 +60,8 @@ def create_table():
 
 create_table()
 
-start = 2040868
-end = 2040870
+start = 8003410
+end = 8003510
 added_cumthi = set()
 
 async def fetch_data(session, sobaodanh):

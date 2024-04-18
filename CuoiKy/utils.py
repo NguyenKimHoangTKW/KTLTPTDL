@@ -20,7 +20,13 @@ def load_cumthi(page=1):
     start = (page - 1) * page_size
     end = start + page_size
     return cum_thi[start:end]
+def get_total_data_count():
+    total_count = Thongtinthisinh.query.count()
+    return total_count
 
+def get_total_datacumthi_count():
+    total_count = Cumthi.query.count()
+    return total_count
 def search_thongtinthisinh(keyword):
     search_results = Thongtinthisinh.query.filter(Thongtinthisinh.sbd.like(f"%{keyword}%")).all()
     for thisinh in search_results:

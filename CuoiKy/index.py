@@ -21,8 +21,8 @@ def View_Data():
     else:
         count = utils.count_thongtinthisinh()
         cates = utils.load_thongtin(page=page)
-    
-    return render_template('viewdata.html', Thongtinthisinh=cates, cumthis=cumthis, pages=math.ceil(count/app.config['PAGE_SIZE']), page=page)
+    total_data_count = utils.get_total_data_count()
+    return render_template('viewdata.html', Thongtinthisinh=cates, cumthis=cumthis, pages=math.ceil(count/app.config['PAGE_SIZE']), page=page,total_data_count=total_data_count)
 
 @app.route("/searchdata")
 def View_Search_Data():
@@ -38,8 +38,9 @@ def View_Search_Data():
     else:
         count = utils.count_thongtinthisinh()
         cates = utils.load_thongtin(page=page)
-    
-    return render_template('searchdata.html', Thongtinthisinh=cates, cumthis=cumthis, pages=math.ceil(count/app.config['PAGE_SIZE']), page=page)
+
+    total_data_count = utils.get_total_data_count()
+    return render_template('searchdata.html', Thongtinthisinh=cates, cumthis=cumthis, pages=math.ceil(count/app.config['PAGE_SIZE']), page=page,total_data_count=total_data_count)
 
 @app.route("/viewcumthi")
 def View_Data_CumThi():
@@ -47,7 +48,8 @@ def View_Data_CumThi():
     page = int(page)
     count = utils.count_cumthi()
     cates = utils.load_cumthi(page=page)
-    return render_template('viewcumthi.html',Cumthi=cates, pages=math.ceil(count/app.config['PAGE_SIZE']), page=page)
+    total_datacumthi_count = utils.get_total_datacumthi_count()
+    return render_template('viewcumthi.html',Cumthi=cates, pages=math.ceil(count/app.config['PAGE_SIZE']), page=page,total_datacumthi_count=total_datacumthi_count)
 
 @app.route("/search", methods=['GET'])
 def search():
