@@ -28,12 +28,12 @@ def get_total_datacumthi_count():
     total_count = Cumthi.query.count()
     return total_count
 def search_thongtinthisinh(keyword):
-    search_results = Thongtinthisinh.query.filter(Thongtinthisinh.sbd.like(f"%{keyword}%")).all()
-    for thisinh in search_results:
+    search_result = Thongtinthisinh.query.filter_by(sbd=keyword).all()
+    for thisinh in search_result:
         cumthi = Cumthi.query.filter_by(macumthi=thisinh.macumthi).first()
         if cumthi:
             thisinh.TenCumThi = cumthi.tencumthi
-    return search_results
+    return search_result
 def count_cumthi():
     return Cumthi.query.count()
 
